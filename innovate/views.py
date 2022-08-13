@@ -8,14 +8,24 @@ from django.urls import reverse
 # Create your views here.
 def index(request):
     # get all startup ideas
-    all_startups = Startup.objects.all()
-    
-
+    all_startups = Startup.objects.order_by("-timestamp").all()
     return render(request, "innovate/index.html",{
         "startups":all_startups
         
     })
 
+def create(request):
+    if request.method == "POST":
+        # validate new startup
+        n = request.POST["title"]
+        d = request.POST["description"]
+        s = request.POST["subject"]
+        new_startup = Startup(name=n, description=d, subject=s, founder=request.user)
+        new_startup.save()
+        return HttpResponseRedirect(reverse("index"))
+
+
+    return render(request, "innovate/create.html")
 
 def login_view(request):
     if request.method == "POST":

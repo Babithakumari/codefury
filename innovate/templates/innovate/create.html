@@ -1,0 +1,41 @@
+{% extends "innovate/layout.html" %}
+
+{% block body %}
+
+<form method="Post" action="{% url 'create' %}"  id="new">
+    {% csrf_token %}
+    
+         <div>
+            <label for="title" class="form-label">Title : </label>
+            <input type="text" id="title" class="form-control" name="title">
+        </div>
+          
+
+          <div>
+            <label for="subject" class="form-label">Subject : </label>
+            <input type="text" id="subject" class="form-control" name="subject">
+          </div>
+          
+
+          <div>
+            <label for="description" class="form-label">Description : </label>
+            <textarea id="description" name="description" rows="4" cols="50" class="form-control">
+              </textarea>
+          </div>
+
+          <input type="submit" value="create" class="btn btn-success">
+         
+
+       
+</form>
+
+
+
+
+
+
+{% endblock %}
+
+<script>
+
+</script>

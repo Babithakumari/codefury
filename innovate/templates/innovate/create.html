@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<form method="Post" action="{% url 'create' %}"  id="new">
+<form method="Post" action="{% url 'create' %}"  id="new" enctype="multipart/form-data">
     {% csrf_token %}
     
          <div>
@@ -12,8 +12,12 @@
           
 
           <div>
-            <label for="subject" class="form-label">Subject : </label>
-            <input type="text" id="subject" class="form-control" name="subject">
+            <label for="subject" class="form-label">Upload Image : </label>
+            <input type="file" id="image" class="form-control" name="image" accept="image/*">
+          </div>
+          <div>
+            <label for="subject" class="form-label">Upload Business Plan : </label>
+            <input type="file" id="image" class="form-control" name="plan" accept=".ppt,.pptx,.txt,.pdf">
           </div>
           
 

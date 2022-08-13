@@ -5,23 +5,37 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
 from django.db.models import Q
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def index(request):
     # get all startup ideas
     all_startups = Startup.objects.order_by("-timestamp").all()
+    user = User.objects.get(username=request.user.username)
+    favourites = user.favourites.all()
     return render(request, "innovate/index.html",{
-        "startups":all_startups
+        "startups":all_startups,
+        "favourites":favourites
         
     })
 
 def create(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.FILES['image'] and request.FILES['plan']:
         # validate new startup
+        image = request.FILES['image']
+        fss = FileSystemStorage()
+        file = fss.save(image.name, image)
+        image_url = fss.url(file)
+
+        plan = request.FILES['plan']
+        fss = FileSystemStorage()
+        file = fss.save(plan.name, plan)
+        plan_url = fss.url(file)
+
         n = request.POST["title"]
-        d = request.POST["description"]
-        s = request.POST["subject"]
-        new_startup = Startup(name=n, description=d, subject=s, founder=request.user)
+        d = request.POST["description"] 
+        
+        new_startup = Startup(name=n, description=d, image=image_url, business_plan=plan_url, founder=request.user)
         new_startup.save()
         return HttpResponseRedirect(reverse("index"))
 
@@ -31,13 +45,31 @@ def create(request):
 
 def edit(request,s_id):
 
-    if request.method=="POST":
+    if request.method == "POST":
+        s_obj= Startup.objects.get(pk=s_id)
+        if request.FILES['image']!='':
+            # validate new startup
+            image = request.FILES['image']
+            fss = FileSystemStorage()
+            file = fss.save(image.name, image)
+            image_url = fss.url(file)
+        else:
+            image_url = s_obj.image
+        if request.FILES['plan']:
+            plan = request.FILES['plan']
+            fss = FileSystemStorage()
+            file = fss.save(plan.name, plan)
+            plan_url = fss.url(file)
+        else:
+            plan_url=s_obj.business_plan
+
         n = request.POST["title"]
-        d = request.POST["description"]
-        s = request.POST["subject"]
-        new_startup = Startup.objects.filter(pk=s_id).update(name=n, description=d, subject=s, founder=request.user)
+        d = request.POST["description"] 
+        new_startup = Startup.objects.filter(pk=s_id).update(name=n, description=d,image=image_url, business_plan=plan_url)
+
         return HttpResponseRedirect(reverse("index"))
 
+    
         
 
     startup=Startup.objects.get(pk=s_id)
@@ -57,6 +89,19 @@ def search(request):
         return render(request,"innovate/search.html",{
             "startups":matching_startups
         })
+def favourites(request):
+    user = User.objects.get(username=request.user.username)
+    all_favourites = user.favourites.order_by("-timestamp").all()
+    return render(request,"innovate/favourites.html",{
+            "startups":all_favourites
+        })
+
+    
+def startup(request,s_id):
+    startup = Startup.objects.get(pk=s_id)
+    return render(request, "innovate/startup.html",{
+        "startup":startup
+    })
 
 def login_view(request):
     if request.method == "POST":

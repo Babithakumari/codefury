@@ -1,7 +1,8 @@
 {% extends "innovate/layout.html" %}
 {% block body %}
 
-<form method="Post" action="{% url 'edit' startup.id %}"  id="new">
+
+<form method="Post" action="{% url 'edit' startup.id %}"  id="new" enctype="multipart/form-data">
     {% csrf_token %}
     
          <div>
@@ -11,24 +12,27 @@
           
 
           <div>
-            <label for="subject" class="form-label">Subject : </label>
-            <input type="text" id="subject" class="form-control" name="subject" value={{startup.subject}}>
+            <label for="subject" class="form-label">Upload Image : Currently : <a href={{startup.image}}>{{startup.image}}</a></label>
+            <input type="file" id="image" class="form-control" name="image" accept="image/*" value={{startup.image}}>
+          </div>
+          <div>
+            
+            <label for="subject" class="form-label">Upload Business Plan : Currently : <a href={{startup.business_plan}}>{{startup.business_plan}}</a></label>
+            <input type="file" id="image" class="form-control" name="plan" accept=".ppt,.pptx,.txt,.pdf" value={{startup.business_plan}}>
           </div>
           
 
           <div>
             <label for="description" class="form-label">Description : </label>
-            <textarea id="description" name="description" rows="4" cols="50" class="form-control" value={{startup.description}}>
+            <textarea id="description" name="description" rows="4" cols="50" class="form-control" >{{startup.description}}
               </textarea>
           </div>
 
-         <input type="submit" value="Update" class="btn btn-success">
-
-
+          <input type="submit" value="Update" class="btn btn-success">
          
 
        
-        </form>
+</form>
 
 
 
@@ -36,3 +40,8 @@
 
 
 {% endblock %}
+
+<script>
+
+</script>
+

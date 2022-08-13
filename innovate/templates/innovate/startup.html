@@ -1,0 +1,47 @@
+{% extends "innovate/layout.html" %}
+{% block body %}
+
+
+
+
+  
+
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src={{startup.image}} class="img-fluid rounded-start" alt="image">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{startup.name}}</h5>
+          <p class="card-text">{{startup.description}}</p>
+          {% if request.user == startup.founder %}
+          <div>
+
+            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Edit" class="btn btn-success"></a>
+            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Delete" class="btn btn-success"></a>
+        
+          </div>
+          {% else %}
+          <div>
+            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Add to favourites" class="btn btn-success"></a>
+            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Invest" class="btn btn-success" ></a>
+        
+            
+          </div>
+          {% endif %}
+          <p class="card-text"><small class="text-muted"><a href={{startup.business_plan}}>View Business Plan</a></small></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <h1>Investors/Advisors </h1>
+  <div>
+
+  </div>
+  <div>
+    
+  </div>
+
+{% endblock %}

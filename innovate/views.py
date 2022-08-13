@@ -4,6 +4,7 @@ from .models import User,Startup
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -49,7 +50,13 @@ def delete(request,s_id):
     startup.delete()
     return HttpResponseRedirect(reverse("index"))
 
-
+def search(request):
+    if request.method=="POST":
+        s_word = request.POST["s_word"]
+        matching_startups = Startup.objects.filter(name__icontains=s_word) | Startup.objects.filter(subject__icontains=s_word)
+        return render(request,"innovate/search.html",{
+            "startups":matching_startups
+        })
 
 def login_view(request):
     if request.method == "POST":

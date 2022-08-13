@@ -2,14 +2,10 @@
 
 {% block body %} 
 <h1>Welcome {{user.username}}</h1>
-<form  method="Post" action="{% url 'search' %}">
-    {% csrf_token %}
 <div id="search-bar">
-    <input type="text" placeholder = "Search for startup" name="s_word">
+    <input type="text" placeholder = "Search for startup">
     <button type="submit">Go</button>
 </div>
-</form>
-
 <br>    
 <div>
     

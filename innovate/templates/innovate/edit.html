@@ -1,0 +1,38 @@
+{% extends "innovate/layout.html" %}
+{% block body %}
+
+<form method="Post" action="{% url 'edit' startup.id %}"  id="new">
+    {% csrf_token %}
+    
+         <div>
+            <label for="title" class="form-label">Title : </label>
+            <input type="text" id="title" class="form-control" name="title" value={{startup.name}}>
+        </div>
+          
+
+          <div>
+            <label for="subject" class="form-label">Subject : </label>
+            <input type="text" id="subject" class="form-control" name="subject" value={{startup.subject}}>
+          </div>
+          
+
+          <div>
+            <label for="description" class="form-label">Description : </label>
+            <textarea id="description" name="description" rows="4" cols="50" class="form-control" value={{startup.description}}>
+              </textarea>
+          </div>
+
+         <input type="submit" value="Update" class="btn btn-success">
+
+
+         
+
+       
+        </form>
+
+
+
+
+
+
+{% endblock %}

@@ -1,14 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import User
+from .models import User,Startup
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
 
 # Create your views here.
 def index(request):
-    return render(request, "innovate/index.html")
-    return HttpResponse("Hello")
+    # get all startup ideas
+    all_startups = Startup.objects.all()
+    
+
+    return render(request, "innovate/index.html",{
+        "startups":all_startups
+        
+    })
 
 
 def login_view(request):

@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class User(AbstractUser):
     favourites = models.ManyToManyField("Startup")
+    profile = models.ImageField(upload_to='images/profiles/', null=True, blank=True)
 
 class Startup(models.Model):
     name = models.CharField(max_length = 30)

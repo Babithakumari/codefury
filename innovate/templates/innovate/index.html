@@ -37,10 +37,16 @@
                 
                 </ul>
             </div>
+            {% if startup not in favourites %}
+            <form action="{% url 'favourites' %}" method="Post">
+                {% csrf_token %}
             <div class="card-footer text-muted child">
-                <small class="text-muted">{{startup.timestamp}}</small>
+                <input type="hidden" value={{startup.id}} name="s_id">
+                <input type="submit" class="text-muted" value="Add to favourites">
                 
             </div>
+        </form>
+            {% endif %}
         </div>
         <br>
         {% endfor %}

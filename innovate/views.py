@@ -85,11 +85,22 @@ def delete(request,s_id):
 def search(request):
     if request.method=="POST":
         s_word = request.POST["s_word"]
-        matching_startups = Startup.objects.filter(name__icontains=s_word) | Startup.objects.filter(subject__icontains=s_word)
+        matching_startups = Startup.objects.filter(name__icontains=s_word) 
         return render(request,"innovate/search.html",{
             "startups":matching_startups
         })
 def favourites(request):
+    if request.method=="POST":
+        s_id = request.POST["s_id"]
+        s_obj = Startup.objects.get(pk=s_id)
+        user =  User.objects.get(username=request.user.username)
+        user.favourites.add(s_obj)
+        return HttpResponseRedirect(reverse("index"))
+
+
+
+
+
     user = User.objects.get(username=request.user.username)
     all_favourites = user.favourites.order_by("-timestamp").all()
     return render(request,"innovate/favourites.html",{
@@ -99,8 +110,13 @@ def favourites(request):
     
 def startup(request,s_id):
     startup = Startup.objects.get(pk=s_id)
+    members = startup.members.all(),
+    
+    investors = startup.investors.all()
     return render(request, "innovate/startup.html",{
-        "startup":startup
+        "startup":startup,
+        "members":members,
+        "investors":investors
     })
 
 def login_view(request):

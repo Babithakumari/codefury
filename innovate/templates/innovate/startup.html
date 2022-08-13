@@ -34,14 +34,28 @@
         </div>
       </div>
     </div>
-
-  </div>
-  <h1>Investors/Advisors </h1>
-  <div>
-
-  </div>
-  <div>
+</div>
+<div>
+  <h1>Founders / Members </h1>
+  {% for member in members %}
+    <ul>
+      <li>{{member.username}}</li>
+    </ul>
+  {% endfor %}
+</div>
+<div>
+  {% for investor in investors %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card h-100">
+       
+          <h5 class="card-title">{{investor.user.username}}</h5>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+  
     
-  </div>
 
 {% endblock %}

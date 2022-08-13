@@ -2,38 +2,51 @@
 
 {% block body %} 
 <h1>Welcome {{user.username}}</h1>
+<form  method="Post" action="{% url 'search' %}">
+    {% csrf_token %}
 <div id="search-bar">
-    <input type="text" placeholder = "Search for startup">
+    <input type="text" placeholder = "Search for startup" name="s_word">
     <button type="submit">Go</button>
 </div>
+</form>
+
 <br>    
 <div>
     
     <div id="items">
     {% for startup in startups %}
     
-        <div class="card" style="width: 18rem;">
+        <div class="card parent" style="width: 18rem;">
+            <img src="{{ startup.image }}" class="card-img-top" >
             <div class="card-header">
-              {{startup.name}}       
-        </div>
-        {% if startup.founder == user%}
-        <div>
-            
-            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Edit" class="btn btn-success"></a>
-            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Delete" class="btn btn-success"></a>
-
-        </div>
-        {% endif %}
-        
-            
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Founded by {{startup.founder}}</li>
-              <li class="list-group-item">{{startup.subject }}</li>
-            
-            </ul>
-            <div class="card-footer text-muted">
-                {{startup.timestamp}}
+                <a href="{% url 'startup' startup.id %}">{{startup.name}}</a>
+                {% if startup in favourites %}
+                    <a href="#"><i class="fas fa-heart like-btn fill " data-id={{favourite.id}}></i></a>
+                {% else %}
+                    <i class="far fa-heart like-btn fill" data-id={{favourite.id}}></i>
+                {% endif %}      
             </div>
+            {% if startup.founder == user%}
+            
+            {% endif %}
+        
+            <div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Founded by {{startup.founder}}</li>
+                  <li class="list-group-item" maxlength="10" class="text">{{startup.description }}</li>
+                
+                </ul>
+            </div>
+            {% if startup not in favourites %}
+            <form action="{% url 'favourites' %}" method="Post">
+                {% csrf_token %}
+            <div class="card-footer text-muted child">
+                <input type="hidden" value={{startup.id}} name="s_id">
+                <input type="submit" class="text-muted" value="Add to favourites">
+                
+            </div>
+        </form>
+            {% endif %}
         </div>
         <br>
         {% endfor %}

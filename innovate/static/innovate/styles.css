@@ -13,3 +13,28 @@
 #edit{
     margin:4px;
 }
+#items{
+    margin:4px;
+    padding:8px;
+    display:flex;
+    justify-content: space-between;
+}
+
+/*.parent {
+    position: relative;
+  }
+  
+.child {
+    position: absolute;
+    bottom: 0;
+    width:100%
+  }*/
+
+
+  .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }

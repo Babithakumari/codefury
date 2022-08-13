@@ -16,27 +16,30 @@
     <div id="items">
     {% for startup in startups %}
     
-        <div class="card" style="width: 18rem;">
+        <div class="card parent" style="width: 18rem;">
+            <img src="{{ startup.image }}" class="card-img-top" >
             <div class="card-header">
-              {{startup.name}}       
-        </div>
-        {% if startup.founder == user%}
-        <div>
+                <a href="{% url 'startup' startup.id %}">{{startup.name}}</a>
+                {% if startup in favourites %}
+                    <a href="#"><i class="fas fa-heart like-btn fill " data-id={{favourite.id}}></i></a>
+                {% else %}
+                    <i class="far fa-heart like-btn fill" data-id={{favourite.id}}></i>
+                {% endif %}      
+            </div>
+            {% if startup.founder == user%}
             
-            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Edit" class="btn btn-success"></a>
-            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Delete" class="btn btn-success"></a>
-
-        </div>
-        {% endif %}
+            {% endif %}
         
-            
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Founded by {{startup.founder}}</li>
-              <li class="list-group-item">{{startup.subject }}</li>
-            
-            </ul>
-            <div class="card-footer text-muted">
-                {{startup.timestamp}}
+            <div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Founded by {{startup.founder}}</li>
+                  <li class="list-group-item" maxlength="10" class="text">{{startup.description }}</li>
+                
+                </ul>
+            </div>
+            <div class="card-footer text-muted child">
+                <small class="text-muted">{{startup.timestamp}}</small>
+                
             </div>
         </div>
         <br>

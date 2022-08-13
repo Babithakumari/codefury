@@ -14,11 +14,16 @@
     
         <div class="card" style="width: 18rem;">
             <div class="card-header">
-              {{startup.name}}
-              {% if startup.founder == user%}
-        <span><i class="fas fa-edit edit-btn" data-id={{startup.id}} data-name={{startup.founder}} id="edit"></i></span>
-        {% endif %}
+              {{startup.name}}       
         </div>
+        {% if startup.founder == user%}
+        <div>
+            
+            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Edit" class="btn btn-success"></a>
+            <input type="submit" value="Delete" class="btn btn-success">
+
+        </div>
+        {% endif %}
         
             
             <ul class="list-group list-group-flush">

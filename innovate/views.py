@@ -27,6 +27,26 @@ def create(request):
 
     return render(request, "innovate/create.html")
 
+
+def edit(request,s_id):
+
+    if request.method=="POST":
+        n = request.POST["title"]
+        d = request.POST["description"]
+        s = request.POST["subject"]
+        new_startup = Startup.objects.filter(pk=s_id).update(name=n, description=d, subject=s, founder=request.user)
+        return HttpResponseRedirect(reverse("index"))
+
+        
+
+    startup=Startup.objects.get(pk=s_id)
+    return render(request,"innovate/edit.html",{
+        "startup":startup
+    })
+
+
+
+
 def login_view(request):
     if request.method == "POST":
 

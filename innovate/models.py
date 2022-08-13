@@ -9,8 +9,8 @@ class Startup(models.Model):
     name = models.CharField(max_length = 30)
     founder = models.ForeignKey("User", on_delete=models.CASCADE, related_name="founder")
     members = models.ManyToManyField("User", related_name="members", blank=True)
-    subject = models.CharField(max_length=50)
-    description = models.CharField(max_length=500)
+    subject = models.TextField()
+    description = models.TextField()
     investors = models.ManyToManyField("User", related_name="investments", blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

@@ -20,7 +20,7 @@
         <div>
             
             <a href="{% url 'edit' startup.id %}"><input type="submit" value="Edit" class="btn btn-success"></a>
-            <input type="submit" value="Delete" class="btn btn-success">
+            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Delete" class="btn btn-success"></a>
 
         </div>
         {% endif %}

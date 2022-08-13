@@ -44,6 +44,10 @@ def edit(request,s_id):
         "startup":startup
     })
 
+def delete(request,s_id):
+    startup = Startup.objects.get(pk=s_id)
+    startup.delete()
+    return HttpResponseRedirect(reverse("index"))
 
 
 

@@ -1,6 +1,7 @@
 {% extends "innovate/layout.html" %}
 
 {% block body %} 
+<h1>Welcome {{user.username}}</h1>
 <div id="search-bar">
     <input type="text" placeholder = "Search for startup">
     <button type="submit">Go</button>
@@ -10,14 +11,19 @@
     
     <div id="items">
     {% for startup in startups %}
-
+    
         <div class="card" style="width: 18rem;">
             <div class="card-header">
               {{startup.name}}
-            </div>
+              {% if startup.founder == user%}
+        <span><i class="fas fa-edit edit-btn" data-id={{startup.id}} data-name={{startup.founder}} id="edit"></i></span>
+        {% endif %}
+        </div>
+        
+            
             <ul class="list-group list-group-flush">
+              <li class="list-group-item">Founded by {{startup.founder}}</li>
               <li class="list-group-item">{{startup.subject }}</li>
-              <li class="list-group-item">Founder : {{startup.founder}}</li>
             
             </ul>
             <div class="card-footer text-muted">

@@ -10,7 +10,12 @@ urlpatterns = [
     path("search", views.search, name="search"),
     path("favourites", views.favourites, name="favourites"),
     path("startup/<int:s_id>", views.startup, name="startup"),
+    path("investments", views.investments, name="investments"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
-    path("register", views.register, name="register")
+    path("register", views.register, name="register"),
+    path("order_payment/", views.order_payment, name="order_payment"),
+    path("callback/", views.callback, name="callback"),
+    path('invest/', views.invest, name="invest"),
+    path('paymenthandler/', views.paymenthandler, name='paymenthandler'),
 ]

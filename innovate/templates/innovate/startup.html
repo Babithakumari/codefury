@@ -24,8 +24,7 @@
           </div>
           {% else %}
           <div>
-            <a href="{% url 'edit' startup.id %}"><input type="submit" value="Add to favourites" class="btn btn-success"></a>
-            <a href="{% url 'delete' startup.id %}"><input type="submit" value="Invest" class="btn btn-success" ></a>
+            <button class="btn btn-primary" id="pay-btn">Invest</button>
         
             
           </div>
@@ -56,6 +55,35 @@
   {% endfor %}
 </div>
   
+ <!-- Razorpay's Javascript code. -->
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ <script>
+   var options = {
+      
+     // Enter the Key ID generated from the Dashboard
+     key: "{{ razorpay_merchant_key }}",
+      
+     // Amount is in currency subunits.
+     // Default currency is INR. Hence,
+     // 50000 refers to 50000 paise
+     amount: "{{ razorpay_amount }}",
+      
+     // Your/store name.
+     name: "Innovate Razorpay",
+      
+     // Pass the `id` obtained in the response of Step 1
+     order_id: "{{ razorpay_order_id }}",
+     callback_url: "{{ callback_url }}",
+   };
     
+   // initialise razorpay with the options.
+   var rzp1 = new Razorpay(options);
+    
+   // add event listener to the payment button.
+   document.getElementById("pay-btn").onclick = function (e) {
+     rzp1.open();
+     e.preventDefault();
+   };
+ </script>   
 
 {% endblock %}

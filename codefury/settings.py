@@ -128,3 +128,7 @@ AUTH_USER_MODEL = 'innovate.User'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+RAZOR_KEY_ID = 'rzp_live_mtUHPJzIUp6KHj'
+RAZOR_KEY_SECRET = 'gw3bwYP088Sd6rM68VJW5uLI'
